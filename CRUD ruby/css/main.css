@@ -1,12 +1,20 @@
 main {
+    flex: 1; /* Faz o conteúdo principal preencher o espaço restante da tela */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 50px 0;
+    width: 100%;
+    height: 100vh; /* Ocupa a altura inteira da tela */
+    justify-content: center; /* Centraliza a imagem */
+    align-items: center; /* Alinha a imagem verticalmente no centro */
+    overflow: hidden; /* Evita rolagem caso a imagem ainda seja muito grande */    
 }
 
 main img {
-    max-width: 80%;
-    height: auto;
+    max-width: 100%; /* A imagem nunca ultrapassa a largura da tela */
+    max-height: 100%; /* A imagem nunca ultrapassa a altura da tela */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz a imagem cobrir todo o espaço */
+    object-fit: contain; /* Ajusta a imagem dentro do espaço disponível sem distorção */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    opacity: 50%;
 }
