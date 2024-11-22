@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+header {
+    background-color: #000;
+    padding: 1.5vw ;
+    font-family: 'Playfair Display', Arial, Helvetica, sans-serif;
+}
+
+nav {
+    text-align: center;
+}
+
+nav a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1.3em;
+    padding: 20vh;
+
+    
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    flex: 1; /* Faz o conteúdo principal preencher o espaço restante da tela */
+    display: flex;
+    justify-content: center; /* Centraliza a imagem */
+    align-items: center; /* Alinha a imagem verticalmente no centro */
+    overflow: hidden; /* Evita rolagem caso a imagem ainda seja muito grande */ 
+    margin-left: -2%;  
+}
+
+main img {
+    width: 145vw;
+    height: 100vh;
+    object-fit: cover; /* Faz a imagem cobrir todo o espaço */
+    object-fit: contain; /* Ajusta a imagem dentro do espaço disponível sem distorção */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    opacity: 50%;
+}
+
+footer {
+    background-color: #000;
+    padding: 1.5vw ;
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Playfair Display', Arial, Helvetica, sans-serif;
+}
+
+footer p {
+    font-size: 1.3em;
+}

@@ -1,6 +1,14 @@
-  .header-cadastrar {
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+ body{
+  margin: 0;
+ }
+
+ .header-cadastrar {
     width: 100vw;
-    padding: 20px;
+    padding: 0.7vw;
     background-color: #f5c3d5;
     display: flex;
     flex-direction: column;
@@ -13,9 +21,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 90%;
+    width: 80%;
     max-width: 600px;
-    margin-bottom: 20px;
   }
   
   /* Logo e texto do título */
@@ -27,12 +34,17 @@
     max-width: 100%; /* Para evitar que ultrapasse o container */
   }
   
-  
 
   .title {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
     font-size: 24px;
     color: #e91e63;
     font-weight: bold;
+  }
+
+  main {
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
   }
   
   /* Estilo do formulário */
@@ -52,7 +64,8 @@
   }
   
   label {
-    font-size: 16px;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-size: 1.3em;
     font-weight: bold;
     color: #555;
     margin-bottom: 5px;
@@ -60,9 +73,10 @@
   
   /* Estilo dos campos de input */
   input[type="text"],
-  input[type="date"] {
+  input[type="date"],
+  input[type="file"] {
     width: 100%;
-    padding: 15px;
+    padding: 1.5vh;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 17.5px;
@@ -70,8 +84,8 @@
   
   /* Botão de cadastro */
   button {
-    width: 100%;
-    padding: 15px;
+    width: 15vw;
+    padding: 1.7vh;
     background-color: #e91e63;
     color: #fff;
     font-weight: bold;
@@ -79,6 +93,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-left: 43%;
   }
   
   button:hover {
@@ -86,8 +101,8 @@
   }
   
   select {
-    width: calc(128% - 170px); 
-    padding: 14px;
+    width: 32.85vw; 
+    padding: 1.7vh;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
