@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produto</title>
+    <link rel="stylesheet" href="cadastro.css">
+</head>
+<body>
+
+    
+    <header class="header-cadastrar">
+
+        <div class="header">
+        <img src="logo.png" onclick="location.href='index.html'" alt="Ruby Rose Logo" class="logo">
+        <span class="title">cadastrar</span>
+
+    </header>
+
+    <main>
+        <form class="form-cadastro" method="post" action="salvar.jsp">
+            <div class="input-group">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+
+            <div class="input-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="input-group">
+                <label for="categoria">Categoria:</label>
+                <select id="categoria" name="categoria" required    >
+                <option value="" disabled selected>Selecione uma categoria</option>
+                <option value="rosto">Rosto</option>
+                <option value="labio">Lábio</option>
+                <option value="olhos">Olhos</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="preco">Preço:</label>
+                <input type="text" id="preco" name="preco" required>
+            </div>
+
+            <div class="input-group">
+                <label for="validade">Data de Validade:</label>
+                <input type="date" id="validade" name="validade" required>
+            </div>
+        </form>
+    </main>
+    <button type="submit" onclick="location.href='/index.html'">Cadastrar</button>        
+</body>
+</html>
