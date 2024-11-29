@@ -6,8 +6,9 @@
     <title>Cadastro de Produto</title>
     <link rel="stylesheet" href="cadastro.css">
 </head>
-<body>
 
+    
+    <form method="post" action="salvar.jsp">
     
     <header class="header-cadastrar">
 
@@ -48,8 +49,13 @@
                 <label for="validade">Data de Validade:</label>
                 <input type="date" id="validade" name="validade" required>
             </div>
+            
+            <a href="index.html">
+            <button type="submit">Cadastrar</button>
+            </a>
         </form>
     </main>
-    <button type="submit" onclick="location.href='/index.html'">Cadastrar</button>        
-</body>
+        
+    </form>
+
 </html>
