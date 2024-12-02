@@ -1,53 +1,25 @@
 <%@page import="java.sql.Connection" %>
 <%@page import="java.sql.DriverManager" %>
-<%@page import="java.sql.PreparedStatement" %>
-<%@page import="java.sql.Date" %>
-<%@page import="java.sql.SQLException" %>
-<%@page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Date" %>
 
+<%@page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Salvar</title>
-    
-<script>
-        // Função de validação de formulário
-        function validateForm() {
-            var nome = document.contactForm.nome.value;
-            var preco = document.contactForm.preco.value;
-            var data_validade = document.contactForm.data_validade.value;
-
-            // Verificação simples de campos obrigatórios
-            if (nome == "") {
-                alert("Nome é obrigatório.");
-                return false;
-            }
-            if (preco == "" || isNaN(preco)) {
-                alert("Preço deve ser um número válido.");
-                return false;
-            }
-            if (data_validade == "") {
-                alert("Data de validade é obrigatória.");
-                return false;
-            }
-
-            return true; // Se tudo estiver certo, permite o envio do formulário
-        }
-    </script>
 </head>
 <body>
-
     <%
-        // Declaração de variáveis
         int id = 0;
         String nome = "";
         String categoria = "";
-        Float preco = 0.0f;
-        String data_validade_str = ""; // String para capturar a data do formulário
-        Date data_validade = null; // Variável do tipo DATE
-        String mensagem = "";
+        String preco = "";
+        String data_de_validade_str = "";
+        Date data_de_validade = null;
 
-        // Recebendo parâmetros da requisição
+        // Obtendo os parâmetros da requisição
         if (request.getParameter("id") != null) {
             id = Integer.parseInt(request.getParameter("id"));
         }
@@ -58,79 +30,55 @@
             categoria = request.getParameter("categoria");
         }
         if (request.getParameter("preco") != null) {
-            try {
-                preco = Float.parseFloat(request.getParameter("preco"));
-            } catch (NumberFormatException e) {
-                mensagem = "Valor de preço inválido.";
-            }
+            preco = request.getParameter("preco");
         }
-        if (request.getParameter("data_validade") != null) {
-            data_validade_str = request.getParameter("data_validade");
+        if (request.getParameter("data_de_validade") != null) {
+            data_de_validade_str = request.getParameter("data_de_validade");
+
+            // Convertendo a data de DD/MM/YYYY para YYYY-MM-DD
             try {
-                // Convertendo a string para o tipo DATE
-                data_validade = Date.valueOf(data_validade_str); // Converte para java.sql.Date
-            } catch (IllegalArgumentException e) {
-                mensagem = "Data de validade inválida. O formato deve ser yyyy-MM-dd.";
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                data_de_validade = sdf.parse(data_de_validade_str);
+
+                // Convertendo para o formato java.sql.Date
+                java.sql.Date sqlDate = new java.sql.Date(data_de_validade.getTime());
+            } catch (Exception e) {
+                out.print("<p style='color:red;'>Erro ao converter a data: " + e.getMessage() + "</p>");
             }
         }
 
-        // Conexão com o banco de dados e inserção dos dados
         try {
+            // Fazendo a conexão com o banco de dados
             Connection conecta = null;
-            PreparedStatement pst = null;
+            PreparedStatement st = null;
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/crud";
             String user = "root";
             String password = "";
             conecta = DriverManager.getConnection(url, user, password);
 
-            // Inserindo dados na tabela contato do BD
-            String sql = "INSERT INTO obsidian (id, nome, categoria, preco, data_validade) VALUES (?, ?, ?, ?, ?)";
-            pst = conecta.prepareStatement(sql);
-            pst.setInt(1, id);
-            pst.setString(2, nome);
-            pst.setString(3, categoria);
-            pst.setFloat(4, preco);
-            if (data_validade != null) {
-                pst.setDate(5, data_validade); // Inserindo a data no formato correto
-            }
+            // Inserindo dados na tabela obsidian
+            String sql = "INSERT INTO obsidian (id, nome, categoria, preco, data_de_validade) VALUES (?, ?, ?, ?, ?)";
+            st = conecta.prepareStatement(sql);
+            st.setInt(1, id); // Define o valor do id
+            st.setString(2, nome); // Define o valor do nome
+            st.setString(3, categoria); // Define o valor da categoria
+            st.setString(4, preco); // Define o valor do preço
+            st.setDate(5, new java.sql.Date(data_de_validade.getTime())); // Define o valor da data de validade (no formato correto)
 
-            int resultado = pst.executeUpdate();
+            // Executando a inserção no banco de dados
+            int rowsAffected = st.executeUpdate();
 
-            if (resultado > 0) {
-                mensagem = "<p style='color:green;font-size:25px'>Contato cadastrado com sucesso.</p>";
-                // Limpar os campos após o sucesso
-                id = 0;
-                nome = "";
-                categoria = "";
-                preco = 0.0f;
-                data_validade_str = "";
+            // Mensagem de sucesso
+            if (rowsAffected > 0) {
+                out.print("<p style='color:blue; font-size:25px;'>CADASTRADO COM SUCESSO...</p>");
+                out.print("<button onclick='window.location.href=\"index.html\"'>Voltar</button>");
             }
-
-            // Fechando a conexão
-            pst.close();
-            conecta.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            String erro = e.getMessage();
-            if (erro.contains("Duplicate entry")) {
-                mensagem = "<p style='color:blue;font-size:25px'>Este Contato já está cadastrado.</p>";
-            } else {
-                mensagem = "<p style='color:red;font-size:25px'>Mensagem de erro: " + erro + "</p>";
-            }
+        } catch (Exception e) {
+            // Caso haja erro na conexão ou inserção, será exibida uma mensagem de erro
+            out.print("<p style='color:red;'>Erro: " + e.getMessage() + "</p>");
+            
         }
     %>
-
-    <form name="contactForm" method="post" action="" onsubmit="return validateForm();">
-        ID: <input type="number" name="id" value="<%= id %>"><br>
-        Nome: <input type="text" name="nome" value="<%= nome %>"><br>
-        Categoria: <input type="text" name="categoria" value="<%= categoria %>"><br>
-        Preço: <input type="text" name="preco" value="<%= preco %>"><br>
-        Data de Validade: <input type="text" name="data_validade" value="<%= data_validade %>"><br>
-        <input type="submit" value="Cadastrar">
-    </form>
-
-    <div id="celularError"></div> <!-- Exibirá mensagens de erro sobre o celular -->
-    <%= mensagem %> <!-- Exibirá mensagens de sucesso ou erro -->
-
 </body>
 </html>
