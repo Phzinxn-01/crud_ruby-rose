@@ -2,7 +2,7 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,12 +12,14 @@
     </head>
     <body>
         <%
+            Connection conecta = null;
+            PreparedStatement st = null;
+            ResultSet rs = null;
+
             try {
-                // Fazer a conexao com o banco de dados
-                Connection conecta;
-                PreparedStatement st;
+                // Fazer a conexão com o banco de dados
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                String url = "jdbc:mysql://localhost:3306/crud";
+                String url = "jdbc:mysql://localhost:3306/crud?useUnicode=true&characterEncoding=UTF-8";
                 String user = "root";
                 String password = "";
                 conecta = DriverManager.getConnection(url, user, password);
@@ -25,8 +27,7 @@
                 // Lista os dados da tabela obsidian no banco de dados
                 String sql = "SELECT * FROM obsidian";
                 st = conecta.prepareStatement(sql);
-                // ResultSet serve para guardar aquilo que é trazido do BD
-                ResultSet rs = st.executeQuery();
+                rs = st.executeQuery();
                 
                 // Formatar data para dd/MM/yyyy
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -52,7 +53,6 @@
                 // Exibe os dados do ResultSet na tabela
                 while (rs.next()) {
                     // Converte a data para o formato desejado
-                    String dataDeValidade = rs.getString("data_de_validade");
                     java.sql.Date dataSql = rs.getDate("data_de_validade");  // Recebe a data do banco
                     String dataFormatada = "";
                     if (dataSql != null) {
@@ -84,8 +84,16 @@
         </table>
         
         <%
-            } catch (Exception x) {
-                out.print ("Mensagem de erro: " + x.getMessage());
+            } catch (Exception e) {
+                out.print("<p style='color:red;'>Erro ao conectar com o banco de dados ou consultar os dados: " + e.getMessage() + "</p>");
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (st != null) st.close();
+                    if (conecta != null) conecta.close();
+                } catch (SQLException e) {
+                    out.print("<p style='color:red;'>Erro ao fechar recursos do banco de dados: " + e.getMessage() + "</p>");
+                }
             }
         %>
     </body>

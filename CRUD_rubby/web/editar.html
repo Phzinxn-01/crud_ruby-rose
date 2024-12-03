@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>CADASTRAR</title>
+        <title>EDITAR</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="cadastro.css"/> 
@@ -10,12 +10,12 @@
     <header class="header-cadastrar">
         <div class="header">
             <img src="logo.png" onclick="location.href='index.html'" alt="Ruby Rose Logo" class="logo">
-            <span class="title">Cadastrar</span>
+            <span class="title">Editar</span>
         </div>
     </header>
         
     <main>
-        <form class="form-cadastro" method="post" action="salvar.jsp">
+        <form class="form-cadastro" method="post" action="editar.jsp">
             <div class="input-group">
                 <label for="id">ID:</label>
                 <input type="text" id="id" name="id" required>
@@ -42,7 +42,7 @@
             </div>
             
             <p> 
-                <input type="submit" value="Cadastrar"/>
+                <input type="submit" value="Salvar Alterações"/>
             </p>
         </form>
     </main>
