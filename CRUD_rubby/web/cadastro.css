@@ -93,7 +93,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-left: 43%;
+    margin-left: 35%;
   }
   
   button:hover {
@@ -109,4 +109,16 @@
     background-color: #fff;
   }
   
+  .button {
+    width: 15vw;
+    padding: 1.7vh;
+    background-color: #e91e63;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 35%;
+  }
   

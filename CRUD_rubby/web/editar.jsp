@@ -1,120 +1,63 @@
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.io.IOException"%>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.*" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Date" %>
 
-<%@page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>EDITAR</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="cadastro.css"/> 
-    </head>
-    <body>
-        <%
-            // Variáveis para exibição de erro
-            String mensagemErro = null;
-            String mensagemSucesso = null;
-            
-            // Variáveis para os dados do produto
-            String nome = "";
-            String categoria = "";
-            String preco = "";
-            String data_de_validade = "";
+<head>
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="cadastro.css"/>    
+</head>
+<body>
+    <%
+        int id = 0;
+        String nome = "";
+        String categoria = "";
+        String preco = "";
+        Date data_de_validade = null;
+        
+        // Obtendo o ID do produto a ser editado
+        if (request.getParameter("id") != null) {
+            try {
+                id = Integer.parseInt(request.getParameter("id"));
+            } catch (NumberFormatException e) {
+                out.print("<p style='color:red;'>Erro: ID invÃ¡lido.</p>");
+            }
+        }
+        
+        // Conectando ao banco de dados e buscando os dados do produto
+        try {
+            Connection conecta = null;
+            PreparedStatement st = null;
+            ResultSet rs = null;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/crud?useUnicode=true&characterEncoding=UTF-8";
+            String user = "root";
+            String password = "";
+            conecta = DriverManager.getConnection(url, user, password);
 
-            // Verifica se o formulário foi enviado via POST (para atualização)
-            if (request.getMethod().equalsIgnoreCase("POST")) {
-                try {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    nome = request.getParameter("nome");
-                    categoria = request.getParameter("categoria");
-                    preco = request.getParameter("preco");
-                    data_de_validade = request.getParameter("data_de_validade");
+            // Consulta para buscar os dados do produto pelo ID
+            String sql = "SELECT nome, categoria, preco, data_de_validade FROM obsidian WHERE id = ?";
+            st = conecta.prepareStatement(sql);
+            st.setInt(1, id);  // Passando o id para a consulta
+            rs = st.executeQuery();
 
-                    // Conexão com o banco de dados
-                    Connection conecta;
-                    PreparedStatement st;
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    String url = "jdbc:mysql://localhost:3306/crud";
-                    String user = "root";
-                    String password = "";
-                    conecta = DriverManager.getConnection(url, user, password);
-                    
-                    // SQL para atualizar os dados do produto
-                    String sqlUpdate = "UPDATE obsidian SET nome=?, categoria=?, preco=?, data_de_validade=? WHERE id=?";
-                    st = conecta.prepareStatement(sqlUpdate);
-                    st.setString(1, nome);
-                    st.setString(2, categoria);
-                    st.setString(3, preco);
-                    st.setString(4, data_de_validade);
-                    st.setInt(5, id);
-                    
-                    int linhasAfetadas = st.executeUpdate();
-                    
-                    // Verifica se a atualização foi bem-sucedida
-                    if (linhasAfetadas > 0) {
-                        mensagemSucesso = "<p style='color:green;'>Produto atualizado com sucesso!</p>";
-                        
-                        // Redireciona para a página de consulta após o sucesso
-                        response.sendRedirect("consultar.jsp"); // Redireciona para a página de consulta
-                        return; // Garante que o restante do código não será executado após o redirecionamento
-                    } else {
-                        mensagemErro = "<p style='color:red;'>Falha na atualização do produto.</p>";
-                    }
-                    
-                    // Fecha a conexão
-                    conecta.close();
-                } catch (Exception e) {
-                    mensagemErro = "<p style='color:red;'>Erro ao conectar com o banco de dados: " + e.getMessage() + "</p>";
-                }
+            // Se encontrar o produto
+            if (rs.next()) {
+                nome = rs.getString("nome");
+                categoria = rs.getString("categoria");
+                preco = rs.getString("preco");
+                data_de_validade = rs.getDate("data_de_validade");
             }
 
-            // Recebe o ID do produto a alterar e armazena na variável "id"
-            int id = -1;
-            String idParam = request.getParameter("id");
-
-            // Verifica se o parâmetro ID é válido
-            if (idParam != null && !idParam.isEmpty()) {
-                try {
-                    id = Integer.parseInt(idParam);
-                    Connection conecta;
-                    PreparedStatement st;
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    String url = "jdbc:mysql://localhost:3306/crud";
-                    String user = "root";
-                    String password = "";
-                    conecta = DriverManager.getConnection(url, user, password);
-                    
-                    // Busca o produto pelo código recebido
-                    String sql = "SELECT * FROM obsidian WHERE id=?";
-                    st = conecta.prepareStatement(sql);
-                    st.setInt(1, id);
-                    ResultSet resultado = st.executeQuery();
-                    
-                    // Verifica se o produto foi encontrado
-                    if (resultado.next()) { 
-                        // Armazena os dados do produto se encontrado
-                        nome = resultado.getString("nome");
-                        categoria = resultado.getString("categoria");
-                        preco = resultado.getString("preco");
-                        data_de_validade = resultado.getString("data_de_validade");
-                    } else {
-                        mensagemErro = "<p style='color:red;'>Produto não encontrado.</p>";
-                    }
-                    
-                    // Fecha a conexão
-                    conecta.close();
-                } catch (Exception e) {
-                    mensagemErro = "<p style='color:red;'>Erro ao acessar o banco de dados: " + e.getMessage() + "</p>";
-                }
-            } else {
-                mensagemErro = "<p style='color:red;'>ID inválido.</p>";
-            }
+            // Formatar a data no formato dd/MM/yyyy para exibiÃ§Ã£o no formulÃ¡rio
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dataFormatada = (data_de_validade != null) ? sdf.format(data_de_validade) : "";
         %>
-
+        
         <header class="header-cadastrar">
             <div class="header">
                 <img src="logo.png" onclick="location.href='index.html'" alt="Ruby Rose Logo" class="logo">
@@ -123,46 +66,32 @@
         </header>
         
         <main>
-            <form class="form-cadastro" method="post" action="editar.jsp">
-                <div class="input-group">
-                    <label for="id">ID:</label>
-                    <input type="text" id="id" name="id" value="<%= id %>" readonly required />
-                </div>
-
+            <form class="form-cadastro" action="salvar-edicao.jsp" method="POST">
+                <input type="hidden" name="id" value="<%= id %>">
                 <div class="input-group">
                     <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="nome" value="<%= nome %>" required />
+                    <input type="text" id="nome" name="nome" value="<%= nome %>" required>
                 </div>
-
                 <div class="input-group">
                     <label for="categoria">Categoria:</label>
-                    <input type="text" id="categoria" name="categoria" value="<%= categoria %>" required />
+                    <input type="text" id="categoria" name="categoria" value="<%= categoria %>" required>
                 </div>
-
                 <div class="input-group">
-                    <label for="preco">Preço:</label>
-                    <input type="text" id="preco" name="preco" value="<%= preco %>" required />
+                    <label for="preco">PreÃ§o:</label>
+                    <input type="text" id="preco" name="preco" value="<%= preco %>" required>
                 </div>
-
                 <div class="input-group">
-                    <label for="data_de_validade">Data de Validade (dd/mm/aaaa):</label>
-                    <input type="text" id="data_de_validade" name="data_de_validade" value="<%= data_de_validade %>" required />
+                    <label for="data_de_validade">Data de Validade (dd/MM/aaaa):</label>
+                    <input type="text" id="data_de_validade" name="data_de_validade" value="<%= dataFormatada %>" required>
                 </div>
-                
-                <p> 
-                    <input type="submit" value="Salvar Alterações"/>
-                </p>
+                <button type="submit">Salvar AlteraÃ§Ãµes</button>
             </form>
-
-            <% 
-            // Exibe mensagens de sucesso ou erro
-            if (mensagemSucesso != null) {
-                out.print(mensagemSucesso);
-            }
-            if (mensagemErro != null) {
-                out.print(mensagemErro);
-            }
-            %>
-        </main>
-    </body>
+        </main>  
+        
+    <%
+        } catch (Exception e) {
+            out.print("<p style='color:red;'>Erro: " + e.getMessage() + "</p>");
+        }
+    %>
+</body>
 </html>

@@ -39,7 +39,7 @@
         if (request.getParameter("data_de_validade") != null) {
             data_de_validade_str = request.getParameter("data_de_validade");
 
-            // Convertendo a data de DD/MM/YYYY para YYYY-MM-DD
+            // Convertendo a data de DD/MM/YYYY para o formato adequado para o banco de dados (YYYY-MM-DD)
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 data_de_validade = sdf.parse(data_de_validade_str);
@@ -83,6 +83,13 @@
             }
         } else {
             out.print("<p style='color:red;'>Por favor, preencha todos os campos.</p>");
+        }
+
+        // Exibindo a data no formato dd/MM/yyyy após inserção (se houver sucesso)
+        if (data_de_validade != null) {
+            SimpleDateFormat sdfExibicao = new SimpleDateFormat("dd/MM/yyyy");
+            String dataExibicao = sdfExibicao.format(data_de_validade);
+            out.print("<p>Data de validade registrada: " + dataExibicao + "</p>");
         }
     %>
 </body>

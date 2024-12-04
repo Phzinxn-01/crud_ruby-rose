@@ -19,3 +19,25 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+@media (min-width: 480px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box; /* Garante que o padding e bordas não afetem as dimensões dos elementos */
+    }
+
+    html, body {
+        height: 100vh;  /* 100% da altura da janela de visualização */
+        margin: 0;      /* Remove a margem padrão do body */
+        overflow: hidden; /* Impede rolagem indesejada */    
+        font-family: Arial, sans-serif;
+        background-color: #f5c3d5;
+        color: #ffffff;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+}
