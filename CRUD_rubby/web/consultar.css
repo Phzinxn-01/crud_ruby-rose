@@ -74,6 +74,111 @@ tbody tr:hover {
     padding: 5px;
     transition: color 0.3s ease;
 }
+img{
+    width: 30px;
+    height: 30px;
+}
+
+.delete-btn {
+    width: 30px; 
+    height: 30px;
+    color: #ff4d4d;
+}
+
+.delete-btn:hover {
+    color: #d40000;
+}
+
+.edit-btn {
+    color: #4d94ff;
+    margin-left: 8px;
+}
+
+.edit-btn:hover {
+    color: #0066cc;
+}
+
+@media (max-width: 480px) {
+    header{
+    background-color: #f5c3d5;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.imglogo{
+    width: 370px;
+}
+
+h1 {
+    color: #d40050;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f7f7f7;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+th {
+    font-weight: bold;
+    color: #333;    
+}
+
+.delete-btn {
+    cursor: pointer; /* Cursor de mão */
+    transition: all 0.3s ease;
+}
+
+img{
+    width: 70px;
+    height: 70px;
+}
+.delete-btn:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.edit-btn {
+    cursor: pointer; /* Cursor de mão */
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+  }
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.delete-btn, .edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
 
 .delete-btn {
     color: #ff4d4d;
@@ -91,15 +196,13 @@ tbody tr:hover {
 .edit-btn:hover {
     color: #0066cc;
 }
-
-@media (max-width: 600px) {
     .container {
         padding: 100px;
     }
     
     th, td {
         padding: 10px;
-        font-size: 0.9em;
+        font-size: 2.6em;
     }
 
     h1 {
