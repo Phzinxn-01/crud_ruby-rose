@@ -58,29 +58,29 @@
             String dataFormatada = (data_de_validade != null) ? sdf.format(data_de_validade) : "";
         %>
         
-        <header class="header-cadastrar">
+        <header class="header-editar">
             <div class="header">
-                <img src="logo.png" onclick="location.href='index.html'" alt="Ruby Rose Logo" class="logo">
-                <span class="title">Editar</span>
+                <img class="logo1" src="logo.png" onclick="location.href='index.html'" alt="Ruby Rose Logo" class="logo">
+                <span class="title1">Editar</span>
             </div>
         </header>
         
         <main>
-            <form class="form-cadastro" action="salvar-edicao.jsp" method="POST">
+            <form class="form-cadastro1" action="salvar-edicao.jsp" method="POST">
                 <input type="hidden" name="id" value="<%= id %>">
-                <div class="input-group">
+                <div class="input-group1">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" value="<%= nome %>" required>
                 </div>
-                <div class="input-group">
+                <div class="input-group1">
                     <label for="categoria">Categoria:</label>
                     <input type="text" id="categoria" name="categoria" value="<%= categoria %>" required>
                 </div>
-                <div class="input-group">
+                <div class="input-group1">
                     <label for="preco">Preço:</label>
                     <input type="text" id="preco" name="preco" value="<%= preco %>" required>
                 </div>
-                <div class="input-group">
+                <div class="input-group1">
                     <label for="data_de_validade">Data de Validade (dd/MM/aaaa):</label>
                     <input type="text" id="data_de_validade" name="data_de_validade" value="<%= dataFormatada %>" required>
                 </div>

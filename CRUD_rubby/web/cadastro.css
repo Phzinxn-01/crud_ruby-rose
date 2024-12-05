@@ -16,6 +16,15 @@
     justify-content: center;
   }
   
+   .header-editar {
+    width: 100%;
+    padding: 0.7vw;
+    background-color: #f5c3d5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   /* Estilo do header */
   .header {
     display: flex;
@@ -35,7 +44,20 @@
   }
   
 
+  .logo1 {
+    width: 200px; /* Aumente o valor para deixar a imagem maior */
+    height: auto; /* Mantém a proporção da imagem */
+    max-width: 100%; /* Para evitar que ultrapasse o container */
+  }
+  
   .title {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: #e91e63;
+    font-weight: bold;
+  }
+  
+  .title1 {
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
     font-size: 24px;
     color: #e91e63;
@@ -49,6 +71,15 @@
   
   /* Estilo do formulário */
   .form-cadastro {
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: auto;
+  }
+  
+  .form-cadastro1 {
     width: 90%;
     max-width: 600px;
     display: flex;
@@ -138,6 +169,16 @@
     justify-content: center;
   }
   
+  .header-editar {
+    width: 100%;
+    padding: 0.7vw;
+    background-color: #f5c3d5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
   /* Estilo do header */
   .header {
     display: flex;
@@ -145,6 +186,7 @@
     justify-content: space-between;
     width: 80%;
     max-width: 600px;
+    gap: 75px;
   }
       
     .logo {
@@ -154,10 +196,24 @@
     max-width: 100%;
   }
   
+  .logo1 {
+    width: 100%;
+    height: auto; 
+    max-width: 100%;
+    margin-left: -22%;
+  }
+  
 
   .title {
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
     font-size: 1.4rem;
+    color: #e91e63;
+    font-weight: bold;
+  }
+  
+  .title1 {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 3.3rem;
     color: #e91e63;
     font-weight: bold;
   }
